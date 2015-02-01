@@ -7,10 +7,21 @@ $(document).ready(function(){
     
     $("#paragraphs").change(function(){
         paragraphs = $(this).val();
+        if(!$('#submit').hasClass('btn-success')){
+            $('#submit').removeClass('btn-warning')
+                        .addClass('btn-success')
+                        .text('Generate');
+        }
+        
     })
     
     $("#submit").click(function(){
         $("#output").html(paragraph_builder(word_bank, paragraphs));
+        if($('#submit').hasClass('btn-success')){
+            $('#submit').removeClass('btn-success')
+                        .addClass('btn-warning')
+                        .text('Regenerate');
+        }
     })
 	
 	
@@ -40,7 +51,7 @@ function paragraph_builder(words, num_of_paragrahs){
         output += sentence_builder(shuffled) + ' ';
         
         if((i % 4) == 0){
-            output += '</p><p>';
+            output += '</p><p>'; //each paragraph is four sentences
         }
         
     }
@@ -55,7 +66,7 @@ function sentence_builder(words){
     
     //words.splice(num_words);
     
-    sentence = words.slice(Math.floor((Math.random() * 3) + 7)).join(' ');
+    sentence = words.slice(Math.floor((Math.random() * 3) + 7)).join(' '); //sentences are between 7 and 10 words
     sentence = sentence[0].toUpperCase() + sentence.slice(1) + '.';
     
     return sentence;
