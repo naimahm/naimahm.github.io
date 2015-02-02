@@ -16,7 +16,9 @@ $(document).ready(function(){
     })
     
     $("#submit").click(function(){
-        $("#output").html(paragraph_builder(word_bank, paragraphs));
+        var $out = $("#output"); 
+        if($out.is(':hidden')){ $out.show(); $("#selectall").show();}
+        $out.val(paragraph_builder(word_bank, paragraphs));
         if($('#submit').hasClass('btn-success')){
             $('#submit').removeClass('btn-success')
                         .addClass('btn-warning')
@@ -24,6 +26,11 @@ $(document).ready(function(){
         }
     })
 	
+    
+    $("#output,#selectall").click(function(){
+        $output = $("#output");
+        $output.focus().select();
+    })
 	
 })
 
@@ -43,7 +50,9 @@ function randominized(items){ // accepts an array of words
 }
 
 function paragraph_builder(words, num_of_paragrahs){
-    var output = '<p>';
+    var output = '',
+        height = 120;
+    
     
     for(i = 1; i < (4 * num_of_paragrahs); i++){        
         var shuffled = randominized(words);  
@@ -51,12 +60,14 @@ function paragraph_builder(words, num_of_paragrahs){
         output += sentence_builder(shuffled) + ' ';
         
         if((i % 4) == 0){
-            output += '</p><p>'; //each paragraph is four sentences
+            output += '\n\r'; //each paragraph is four sentences
+            height = i * 120;
+            $('#output').height(height);
         }
         
     }
     
-    output += '</p>';
+    //output += '</p>';
     
     return output;
 }

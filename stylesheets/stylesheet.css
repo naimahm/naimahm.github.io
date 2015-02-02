@@ -4,3 +4,10 @@ body{background: rgb(65, 64, 64);}
 .jumbotron.home{ background-image: url("https://s3-us-west-1.amazonaws.com/naimerica.com/assets/img/naimerica_color_flag.png"); background-size: 100%;}
 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{background-color: #266782;}
 a {color: #266782;}
+
+/* CATSUM */
+#output{margin: 0px;height: 120px;display: inline-block;width: 686px;resize: none;background: transparent;border: none;display: none;}
+#output:selected,#output:focus{color: #23527c;}
+#output:focus {outline: none;border: none;}
+#selectall{display:none; font-size: 65%;}
+#selectall:hover{cursor: pointer;}
