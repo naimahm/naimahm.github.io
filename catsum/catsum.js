@@ -61,11 +61,11 @@ function paragraph_builder(words, num_of_paragrahs){
         
         if((i % 4) == 0){
             output += '\n\r'; //each paragraph is four sentences
-            height = i * 120;
-            $('#output').height(height);
         }
         
     }
+    height = num_of_paragrahs * 150;
+    $('#output').height(height);
     
     //output += '</p>';
     
