@@ -11,3 +11,17 @@ a {color: #266782;}
 #output:focus {outline: none;border: none;}
 #selectall{display:none; font-size: 65%;}
 #selectall:hover{cursor: pointer;}
+
+/* NUMEROLOGY */
+#numberResultWrapper{  
+	display: -webkit-box;
+  	display: -moz-box;
+  	display: -ms-flexbox;
+  	display: -webkit-flex;
+  	display: flex;
+	flex-direction: row; 
+	flex-wrap: wrap; 
+	justify-content: space-between; 
+}
+.numberResult{width: 200px; font-size: 2em; text-align: center; border: 1px dashed; margin-top: .75em;}
+.numberResult:before{ content: attr(number); display: block; font-size: 3em; color: white;}
