@@ -13,6 +13,7 @@ a {color: #266782;}
 #selectall:hover{cursor: pointer;}
 
 /* NUMEROLOGY */
+.wrapWrap{display: none;}
 #numberResultWrapper{  
 	display: -webkit-box;
   	display: -moz-box;
@@ -24,4 +25,5 @@ a {color: #266782;}
 	justify-content: space-between; 
 }
 .numberResult{width: 200px; font-size: 2em; text-align: center; border: 1px dashed; margin-top: .75em;}
+.numberResult:hover{cursor: pointer; border-color: black; color: white; background-color: #aaa;}
 .numberResult:before{ content: attr(number); display: block; font-size: 3em; color: white;}

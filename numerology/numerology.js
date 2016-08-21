@@ -76,22 +76,39 @@ class NumerologyNumbersCalculator{
 	//}
 }
 
+function calculateNumbers(){
+	var fullName = $('#fullName').val(), birthDate = $('#birthDate').val();
+    if(fullName || birthDate){
+    	let numbers = new NumerologyNumbersCalculator(fullName, birthDate);
+    	if(birthDate) $('#lifePath').attr('number', numbers.getLifePathNumber());
+    	if(fullName){       		
+    		$('#expression').attr('number', numbers.getExpressionNumber());
+    		$('#heartsDesire').attr('number', numbers.getHeartsDesireNumber());
+    		$('#cornerstone').attr('number', numbers.getCornerstoneNumber());
+    		$('#personality').attr('number', numbers.getPersonalityNumber());
+    		$('#capstone').attr('number', numbers.getCapstoneNumber());
+    		$('#firstVowel').attr('number', numbers.getFirstVowelNumber());
+    	}
+    	$('.wrapWrap').show();
+    	$(window).scrollTop($('#numberResultWrapper').offset().top)
+    }
+}
+
+function encodeSearch(type, number){
+	return encodeURIComponent("\""+ number+" "+type+" number\" numerology");
+}
+
+function searchGoogle(evt){
+	var target = evt.target;
+	var type =target.getAttribute("type"), number = target.getAttribute("number");
+	var q = "https://www.google.com/search?num=30&safe=off&site=&source=hp&q=" + encodeSearch(type, number);
+	window.open(q);
+}
+
 $(document).ready(() => {
-	$("#submit").click(() => {
-		var fullName = $('#fullName').val(), birthDate = $('#birthDate').val();
-        if(fullName || birthDate){
-        	let numbers = new NumerologyNumbersCalculator(fullName, birthDate);
-        	if(birthDate) $('#lifePath').attr('number', numbers.getLifePathNumber());
-        	if(fullName){       		
-        		$('#expression').attr('number', numbers.getExpressionNumber());
-        		$('#heartsDesire').attr('number', numbers.getHeartsDesireNumber());
-        		$('#cornerstone').attr('number', numbers.getCornerstoneNumber());
-        		$('#personality').attr('number', numbers.getPersonalityNumber());
-        		$('#capstone').attr('number', numbers.getCapstoneNumber());
-        		$('#firstVowel').attr('number', numbers.getFirstVowelNumber());
-        	}
-        	// $(window).scrollTop($('#numberResultWrapper').offset().top)
-        }
-	})
+	$("#submit").click(calculateNumbers)
+	$('.numberResult').click(searchGoogle);
 })
+
+
  
