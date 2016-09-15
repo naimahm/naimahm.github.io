@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <style type="text/css">
+
+            /* HTML5 display-role reset for older browsers */
+            article, aside, details, figcaption, figure,
+            footer, header, hgroup, menu, nav, section {
+                display: block;
+            }
+            html, body, #page_wrapper, p, h1, h2, h3, h4{
+                width:100%;
+                height: 100%;
+                margin: 0;
+                font-family: 'Open Sans', sans-serif;
+            }
+
+            p{font-size: 16px;}
+            h1, .nearest th { font-size: 3em;}
+            h2 { font-size: 2.5em; }
+            h3, th { font-size: 2em; }
+            h4 { font-size: 1.5em; }
+            #page_wrapper {
+                margin-top: 15%;
+                text-align: center;
+                max-width: 900px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #page_wrapper > table{
+                width: 100%;
+                margin-bottom: 1em;
+                color: white;
+            }
+
+
+            #page_wrapper > table.nearest {
+                margin-bottom: 2em;
+            }
+
+            #page_wrapper > table thead th{
+                color: black;
+            }
+
+            #page_wrapper > table tr.numbers{
+                min-height: 250px;
+                padding: 20px;
+                font-size: 2em;
+            }
+
+            #page_wrapper > table tr.headers{
+
+            }
+
+            #page_wrapper > table .numbers td{
+                border: 5px solid darkgreen;
+                background: cornflowerblue;
+            }
+            #page_wrapper > table .headers td{
+                border: 5px solid cornflowerblue;
+                background: darkgreen;
+            }
+
+            @media (max-width: 800px){
+                #page_wrapper{
+                    width: 100%;
+                    margin: 20px;
+                }
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <section id="page">
+            <div id="page_wrapper">
+
+            </div>
+        </section>
+        <script type="text/javascript">
+            var dates = [
+                    {traveller: "Katie", location: "New York", month: 9, day: 28, year: 2016, hour: 19, minute: 30}, // Sept 28
+                    {traveller: "Katie", location: "New York", month: 10, day: 29, year: 2016, hour: 11, minute: 0}, // Oct 29
+                    {traveller: "Naimah", location: "London", month: 11, day: 18, year: 2016, hour: 8, minute: 0}, // Nov 18
+                    {traveller: "Katie", location: "New York", month: 11, day: 23, year: 2016, hour: 20, minute: 0}, // Nov 23
+                    {traveller: "Katie", location: "New York", month: 12, day: 23, year: 2016, hour: 20, minute: 0}, // Dec 23
+            ];
+
+            function printDates(sortedDates){
+                var page_wrapper = document.getElementById("page_wrapper");
+                var count = 0;
+                for(var i = 0; i < sortedDates.length; i++){
+                    var d = sortedDates[i];
+                    var today = new Date();
+                    var nextDate = new Date(d.year, d.month - 1, d.day, d.hour, d.minute);
+                    if(nextDate > today){
+                        var clock = initializeClock(d.traveller, d.location, nextDate);
+                        clock.setAttribute("id", "clock" + i);
+                        if(count == 0)
+                            clock.setAttribute("class", "nearest");
+                        page_wrapper.appendChild(clock);
+                        count++;
+                    }
+                }
+            }
+
+            function getTimeRemaining(endtime){
+                var t = Date.parse(endtime) - Date.parse(new Date());
+                var seconds = Math.floor( (t/1000) % 60 );
+                var minutes = Math.floor( (t/1000/60) % 60 );
+                var hours = Math.floor( (t/(1000*60*60)) % 24 );
+                var days = Math.floor( t/(1000*60*60*24) );
+                return {
+                    'total': t,
+                    'days': days,
+                    'hours': hours,
+                    'minutes': minutes,
+                    'seconds': seconds
+                };
+            }
+            
+            function initializeClock(who, where, endtime){
+                var clock = document.createElement("table");
+                var timeinterval = setInterval(function(){
+                    var t = getTimeRemaining(endtime);
+                    var html = "<thead><th colspan='4'>Until " +who + " visits " + where + "</th></thead>" +
+                            "<tbody><tr class='numbers'>";
+                    html += '<td>' + t.days + '</td>' +
+                            '<td>'+ t.hours + '</td>' +
+                            '<td>' + t.minutes + '</td>' +
+                            '<td>' + t.seconds + '</td>';
+                    html += "<tr class='headers'><td>days</td><td>hours</td><td>minutes</td><td>seconds</td></tr>";
+                    html += "</tr></tbody>";
+                    clock.innerHTML = html;
+                    if(t.total<=0){
+                        clearInterval(timeinterval);
+                    }
+                },1000);
+                return clock;
+            }
+
+
+            document.onLoad = printDates(dates);
+        </script>
+    </body>
+</html>
