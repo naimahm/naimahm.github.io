@@ -9,7 +9,7 @@
             footer, header, hgroup, menu, nav, section {
                 display: block;
             }
-            html, body, #page_wrapper, p, h1, h2, h3, h4{
+            html, body, #page, p, h1, h2, h3, h4{
                 width:100%;
                 height: 100%;
                 margin: 0;
@@ -119,7 +119,7 @@
                     'seconds': seconds
                 };
             }
-            
+
             function initializeClock(who, where, endtime){
                 var clock = document.createElement("table");
                 var timeinterval = setInterval(function(){
@@ -141,7 +141,12 @@
             }
 
 
-            document.onLoad = printDates(dates);
+            document.onLoad = function(){
+                var page = document.getElementById("page");
+                var image = "/images/nk"+ (Math.random() * (3 - 1) + 1) +".jpg";
+                page.setAttribute("style", "background-image: url('" + image +"'); background-repeat: no-repeat; background-attachment: fixed; background-position: center; ");
+                printDates(dates);
+            }
         </script>
     </body>
 </html>
