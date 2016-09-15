@@ -1,7 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
+        <meta charset="utf-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width,initial-scale=1" name="viewport">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <title>Countdown until we see each other</title>
         <style type="text/css">
 
             /* HTML5 display-role reset for older browsers */
@@ -22,42 +26,45 @@
             h3, th { font-size: 2em; }
             h4 { font-size: 1.5em; }
             #page_wrapper {
-                margin-top: 15%;
+                margin-top: 0 !important;
                 text-align: center;
                 max-width: 900px;
                 margin-left: auto;
                 margin-right: auto;
+                padding: 20px;
             }
-            #page_wrapper > table{
+            #page_wrapper table{
                 width: 100%;
                 margin-bottom: 1em;
                 color: white;
             }
 
 
-            #page_wrapper > table.nearest {
+            #page_wrapper .nearest {
                 margin-bottom: 2em;
             }
 
-            #page_wrapper > table thead th{
+            #page_wrapper thead th{
                 color: black;
             }
 
-            #page_wrapper > table tr.numbers{
+            #page_wrapper tr.numbers{
                 min-height: 250px;
                 padding: 20px;
                 font-size: 2em;
             }
 
-            #page_wrapper > table tr.headers{
+            #page_wrapper tr.headers{
 
             }
 
-            #page_wrapper > table .numbers td{
+            .mobile_headers{display: none; font-size: .5em;}
+
+            #page_wrapper .numbers td{
                 border: 5px solid darkgreen;
                 background: cornflowerblue;
             }
-            #page_wrapper > table .headers td{
+            #page_wrapper .headers td, .mobile_headers{
                 border: 5px solid cornflowerblue;
                 background: darkgreen;
             }
@@ -66,6 +73,23 @@
                 #page_wrapper{
                     width: 100%;
                     margin: 20px;
+                    padding: 20px;
+                }
+            }
+            @media (max-width: 480px){
+                #page_wrapper table {
+                    width: 100%;
+                    margin: 20px;
+                    padding: 20px;
+                }
+                #page_wrapper table td{
+                    display: block;
+                }
+                #page_wrapper table .headers{
+                    display: none;
+                }
+                .mobile_headers{
+                    display: block;
                 }
             }
 
@@ -119,10 +143,10 @@
                     var t = getTimeRemaining(endtime);
                     var html = "<thead><th colspan='4'>Until " +who + " visits " + where + "</th></thead>" +
                             "<tbody><tr class='numbers'>";
-                    html += '<td>' + t.days + '</td>' +
-                            '<td>'+ t.hours + '</td>' +
-                            '<td>' + t.minutes + '</td>' +
-                            '<td>' + t.seconds + '</td>';
+                    html += '<td>' + t.days + '<div class="mobile_headers">days</div></td>' +
+                            '<td>'+ t.hours + '<div class="mobile_headers">hours</div></td>' +
+                            '<td>' + t.minutes + '<div class="mobile_headers">minutes</div></td>' +
+                            '<td>' + t.seconds + '<div class="mobile_headers">seconds</div></td>';
                     html += "<tr class='headers'><td>days</td><td>hours</td><td>minutes</td><td>seconds</td></tr>";
                     html += "</tr></tbody>";
                     clock.innerHTML = html;
