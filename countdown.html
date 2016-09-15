@@ -141,8 +141,8 @@
                     {traveller: "Katie", location: "New York", month: 12, day: 23, year: 2016, hour: 20, minute: 0}, // Dec 23
                 ];
                 var page = document.getElementById("page");
-                var image = "/images/nk"+ (Math.random() * (3 - 1) + 1) +".jpg";
-                page.setAttribute("style", "background-image: url('" + image +"'); background-repeat: no-repeat; background-attachment: fixed; background-position: center; ");
+                var image = "/images/nk"+ Math.floor(Math.random() * (3 - 1) + 1) +".jpg";
+                page.setAttribute("style", "background-image: url('" + image +"'); background-repeat: no-repeat; background-attachment: fixed; background-position: center; background-size: cover;");
                 printDates(dates);
             }
 
