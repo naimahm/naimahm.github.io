@@ -1,176 +1,227 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="utf-8">
-        <meta content="IE=edge" http-equiv="X-UA-Compatible">
-        <meta content="width=device-width,initial-scale=1" name="viewport">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        <title>Countdown until we see each other</title>
-        <style type="text/css">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <title>Countdown until we see each other</title>
+    <style type="text/css">
 
-            /* HTML5 display-role reset for older browsers */
-            article, aside, details, figcaption, figure,
-            footer, header, hgroup, menu, nav, section {
-                display: block;
-            }
-            html, body, #page, p, h1, h2, h3, h4{
-                width:100%;
-                height: 100%;
-                margin: 0;
-                font-family: 'Open Sans', sans-serif;
-            }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+    html, body, #page, p, h1, h2, h3, h4{
+        width:100%;
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+    }
 
-            p{font-size: 16px;}
-            h1, .nearest th { font-size: 3em;}
-            h2 { font-size: 2.5em; }
-            h3, th { font-size: 2em; }
-            h4 { font-size: 1.5em; }
-            #page_wrapper {
-                margin-top: 0 !important;
-                text-align: center;
-                max-width: 900px;
-                margin-left: auto;
-                margin-right: auto;
-                padding: 20px;
-            }
-            #page_wrapper table{
-                width: 100%;
-                margin-bottom: 1em;
-                color: white;
-            }
+    p{font-size: 16px;}
+    h1, .nearest th { font-size: 3em;}
+    h2 { font-size: 2.5em; }
+    h3 { font-size: 2em; }
+    h4 { font-size: 1.5em; }
+    #page_wrapper {
+        margin-top: 0 !important;
+        text-align: center;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 20px;
+        padding-top: 35%;
+    }
+    .clock_table{
+        display: inline-block;
+        width: 23.5%;
+        text-align: center;
+        margin-bottom: 1em;
+        color: white;
+        cursor: pointer;
+        background: rgba(177,177,177, .35);
+        border: 1px solid black;
+
+    }
+    .clock_table.nearest, .clock_table.open{
+        width: auto;
+        display: table;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .clock_table.nearest{
+        margin-bottom: 2em;
+        cursor: initial;
+    }
+    .table_toggle{font-size: .75em;}
+    .nearest .table_toggle{display: none;}
+    .clock_table thead th{
+        color: #777;
+        vertical-align: top;
+        text-align: center;
+    }
+
+    .clock_table tr.numbers{
+        min-height: 250px;
+        padding: 20px;
+        font-size: 2em;
+    }
+
+    .clock_table tr.headers{
+
+    }
+
+    .mobile_headers{display: none; font-size: .5em;}
+
+    #page_wrapper .numbers td{
+        border: 2px solid rgba(0,0,0, .25);
+        background: rgba(255,255,255, .25);
+        color: #000;
+    }
+    #page_wrapper .headers td, .mobile_headers{
+        border: 2px solid rgba(255,255,255, .25);
+        background: rgba(0,0,0, .25);
+    }
+    td{ display: none; }
+    .nearest td, .open td, td.days{display: table-cell;}
+
+    @media (max-width: 800px){
+        #page_wrapper{
+            margin: 20px;
+            padding: 20px;
+        }
+    }
+    @media (max-width: 480px){
+        .clock_table {
+            margin: 20px;
+            padding: 20px;
+        }
+        .clock_table td{
+            display: block;
+        }
+        .clock_table .headers{
+            display: none;
+        }
+        .mobile_headers{
+            display: block;
+        }
+    }
 
 
-            #page_wrapper .nearest {
-                margin-bottom: 2em;
-            }
+    </style>
+</head>
+<body>
+    <section id="page">
+        <div id="page_wrapper">
 
-            #page_wrapper thead th{
-                color: black;
-            }
+        </div>
+    </section>
+    <script type="text/javascript">
 
-            #page_wrapper tr.numbers{
-                min-height: 250px;
-                padding: 20px;
-                font-size: 2em;
-            }
-
-            #page_wrapper tr.headers{
-
-            }
-
-            .mobile_headers{display: none; font-size: .5em;}
-
-            #page_wrapper .numbers td{
-                border: 5px solid darkgreen;
-                background: cornflowerblue;
-            }
-            #page_wrapper .headers td, .mobile_headers{
-                border: 5px solid cornflowerblue;
-                background: darkgreen;
-            }
-
-            @media (max-width: 800px){
-                #page_wrapper{
-                    width: 100%;
-                    margin: 20px;
-                    padding: 20px;
+        function printDates(sortedDates){
+            var page_wrapper = document.getElementById("page_wrapper");
+            var count = 0;
+            for(var i = 0; i < sortedDates.length; i++){
+                var d = sortedDates[i];
+                var today = new Date();
+                var nextDate = new Date(d.year, d.month - 1, d.day, d.hour, d.minute);
+                if(nextDate > today){
+                    var clock = initializeClock(d.traveller, d.location, nextDate, i);
+                    if(count == 0)
+                        clock.className = "clock_table nearest";
+                    page_wrapper.appendChild(clock);
+                    updateClocks(i, nextDate);
+                    count++;
                 }
             }
-            @media (max-width: 480px){
-                #page_wrapper table {
-                    width: 100%;
-                    margin: 20px;
-                    padding: 20px;
+        }
+
+        function getTimeRemaining(endtime){
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor( (t/1000) % 60 );
+            var minutes = Math.floor( (t/1000/60) % 60 );
+            var hours = Math.floor( (t/(1000*60*60)) % 24 );
+            var days = Math.floor( t/(1000*60*60*24) );
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };
+        }
+
+        function initializeClock(who, where, endtime, index){
+            var clock = document.createElement("table");
+            clock.setAttribute("id", "clock" + index);
+            clock.className = "clock_table";
+                var t = getTimeRemaining(endtime);
+                var html = "<thead><th colspan='4'>Until " +who + " visits " + where + "&nbsp;&nbsp;&nbsp;&nbsp;<span class='table_toggle'>(+ expand)</span></th></thead>" +
+                "<tbody><tr class='numbers'>";
+                html += '<td class="days">'     + t.days    + '<div class="mobile_headers">days</div></td>' +
+                '<td class="hours">'    + t.hours   + '<div class="mobile_headers">hours</div></td>' +
+                '<td class="minutes">'  + t.minutes + '<div class="mobile_headers">minutes</div></td>' +
+                '<td class="seconds">'  + t.seconds + '<div class="mobile_headers">seconds</div></td>';
+                html += "<tr class='headers'><td class='days'>days</td><td class='hours'>hours</td><td class='minutes'>minutes</td><td class='seconds'>seconds</td></tr>";
+                html += "</tr></tbody>";
+                clock.innerHTML = html;
+            return clock;
+        }
+
+
+        function updateClocks(clock_index, endtime){
+            var timeinterval = setInterval(function(){
+                var t = getTimeRemaining(endtime);
+                var clock = document.getElementById("clock"+clock_index);
+                if(clock){
+                    clock.getElementsByClassName('days')[0].innerText = t.days;
+                    clock.getElementsByClassName('hours')[0].innerText = t.hours;
+                    clock.getElementsByClassName('minutes')[0].innerText = t.minutes;
+                    clock.getElementsByClassName('seconds')[0].innerText = t.seconds;
                 }
-                #page_wrapper table td{
-                    display: block;
-                }
-                #page_wrapper table .headers{
-                    display: none;
-                }
-                .mobile_headers{
-                    display: block;
-                }
+               if(t.total<=0){
+                   clearInterval(timeinterval);
+               }
+            },1000);
+        }
+
+        function toggleClock(evt){
+            console.log(evt.target);
+            if(evt.target.classList[0] == "table_toggle"){
+                var target = evt.target, 
+                    parent_table = target.parentNode.parentNode.parentNode.parentNode;
+                    className = parent_table.className, 
+                    classList = parent_table.classList;
+                if(classList[2] != "nearest"){
+                    target.innerText = classList.length == 2 ? "(+ expand)" : "(- collapse)";
+                    parent_table.className = classList.length == 2 ? classList[0] : className + " open";
+                }   
             }
+        }
 
+        function load(){
+            var dates = [
+                {traveller: "Katie", location: "New York", month: 9, day: 28, year: 2016, hour: 19, minute: 30}, // Sept 28
+                {traveller: "Katie", location: "New York", month: 10, day: 29, year: 2016, hour: 11, minute: 0}, // Oct 29
+                {traveller: "Naimah", location: "London", month: 11, day: 18, year: 2016, hour: 8, minute: 0}, // Nov 18
+                {traveller: "Katie", location: "New York", month: 11, day: 23, year: 2016, hour: 20, minute: 0}, // Nov 23
+                {traveller: "Katie", location: "New York", month: 12, day: 23, year: 2016, hour: 20, minute: 0}, // Dec 23
+            ];
+            var page = document.getElementById("page");
+            var image = "/images/nk"+ Math.round(Math.random() * (19 - 1) + 1) +".jpg";
+            page.setAttribute("style", "background-image: url('" + image +"'); background-repeat: no-repeat; background-attachment: fixed; background-position: center; background-size: cover;");
+            setInterval(function(){
+                image = "/images/nk"+ Math.round(Math.random() * (19 - 1) + 1) +".jpg";
+                page.setAttribute("style", "background-image: url('" + image +"'); background-repeat: no-repeat; background-attachment: fixed; background-position: center; background-size: cover;");}
+            , 5000);
+            printDates(dates);
+            var page_wrapper = document.getElementById("page_wrapper");
+            page_wrapper.onclick = toggleClock;
+        }
 
-        </style>
-    </head>
-    <body>
-        <section id="page">
-            <div id="page_wrapper">
-
-            </div>
-        </section>
-        <script type="text/javascript">
-
-            function printDates(sortedDates){
-                var page_wrapper = document.getElementById("page_wrapper");
-                var count = 0;
-                for(var i = 0; i < sortedDates.length; i++){
-                    var d = sortedDates[i];
-                    var today = new Date();
-                    var nextDate = new Date(d.year, d.month - 1, d.day, d.hour, d.minute);
-                    if(nextDate > today){
-                        var clock = initializeClock(d.traveller, d.location, nextDate);
-                        clock.setAttribute("id", "clock" + i);
-                        if(count == 0)
-                            clock.setAttribute("class", "nearest");
-                        page_wrapper.appendChild(clock);
-                        count++;
-                    }
-                }
-            }
-
-            function getTimeRemaining(endtime){
-                var t = Date.parse(endtime) - Date.parse(new Date());
-                var seconds = Math.floor( (t/1000) % 60 );
-                var minutes = Math.floor( (t/1000/60) % 60 );
-                var hours = Math.floor( (t/(1000*60*60)) % 24 );
-                var days = Math.floor( t/(1000*60*60*24) );
-                return {
-                    'total': t,
-                    'days': days,
-                    'hours': hours,
-                    'minutes': minutes,
-                    'seconds': seconds
-                };
-            }
-
-            function initializeClock(who, where, endtime){
-                var clock = document.createElement("table");
-                var timeinterval = setInterval(function(){
-                    var t = getTimeRemaining(endtime);
-                    var html = "<thead><th colspan='4'>Until " +who + " visits " + where + "</th></thead>" +
-                            "<tbody><tr class='numbers'>";
-                    html += '<td>' + t.days + '<div class="mobile_headers">days</div></td>' +
-                            '<td>'+ t.hours + '<div class="mobile_headers">hours</div></td>' +
-                            '<td>' + t.minutes + '<div class="mobile_headers">minutes</div></td>' +
-                            '<td>' + t.seconds + '<div class="mobile_headers">seconds</div></td>';
-                    html += "<tr class='headers'><td>days</td><td>hours</td><td>minutes</td><td>seconds</td></tr>";
-                    html += "</tr></tbody>";
-                    clock.innerHTML = html;
-                    if(t.total<=0){
-                        clearInterval(timeinterval);
-                    }
-                },1000);
-                return clock;
-            }
-            function load(){
-                var dates = [
-                    {traveller: "Katie", location: "New York", month: 9, day: 28, year: 2016, hour: 19, minute: 30}, // Sept 28
-                    {traveller: "Katie", location: "New York", month: 10, day: 29, year: 2016, hour: 11, minute: 0}, // Oct 29
-                    {traveller: "Naimah", location: "London", month: 11, day: 18, year: 2016, hour: 8, minute: 0}, // Nov 18
-                    {traveller: "Katie", location: "New York", month: 11, day: 23, year: 2016, hour: 20, minute: 0}, // Nov 23
-                    {traveller: "Katie", location: "New York", month: 12, day: 23, year: 2016, hour: 20, minute: 0}, // Dec 23
-                ];
-                var page = document.getElementById("page");
-                var image = "/images/nk"+ Math.floor(Math.random() * (3 - 1) + 1) +".jpg";
-                page.setAttribute("style", "background-image: url('" + image +"'); background-repeat: no-repeat; background-attachment: fixed; background-position: center; background-size: cover;");
-                printDates(dates);
-            }
-
-            document.onLoad = load();
+        document.onLoad = load();
         </script>
     </body>
 </html>
