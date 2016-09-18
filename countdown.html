@@ -24,14 +24,19 @@
     h2 { font-size: 2.5em; }
     h3 { font-size: 2em; }
     h4 { font-size: 1.5em; }
+    #page{
+        background-repeat: no-repeat; 
+        background-attachment: fixed; 
+        background-position: center; 
+        background-size: contain;
+    }
     #page_wrapper {
         margin-top: 0 !important;
         text-align: center;
         max-width: 900px;
         margin-left: auto;
         margin-right: auto;
-        padding: 20px;
-        padding-top: 35%;
+        padding: 25% 20px;    
     }
     .clock_table{
         display: inline-block;
@@ -128,7 +133,7 @@
                 var today = new Date();
                 var nextDate = new Date(d.year, d.month - 1, d.day, d.hour, d.minute);
                 if(nextDate > today){
-                    var clock = initializeClock(d.traveller, d.location, nextDate, i);
+                    var clock = initializeClock(d.traveller, d.location, d.tripDuration, nextDate, i);
                     if(count == 0)
                         clock.className = "clock_table nearest";
                     page_wrapper.appendChild(clock);
@@ -153,12 +158,12 @@
             };
         }
 
-        function initializeClock(who, where, endtime, index){
+        function initializeClock(who, where, howLong, endtime, index){
             var clock = document.createElement("table");
             clock.setAttribute("id", "clock" + index);
             clock.className = "clock_table";
                 var t = getTimeRemaining(endtime);
-                var html = "<thead><th colspan='4'>Until " +who + " visits " + where + "&nbsp;&nbsp;&nbsp;&nbsp;<span class='table_toggle'>(+ expand)</span></th></thead>" +
+                var html = "<thead><th colspan='4'>Until " + who + " visits " + where + " for "+ howLong +" days &nbsp;&nbsp;&nbsp;&nbsp;<span class='table_toggle'>(+ expand)</span></th></thead>" +
                 "<tbody><tr class='numbers'>";
                 html += '<td class="days">'     + t.days    + '<div class="mobile_headers">days</div></td>' +
                 '<td class="hours">'    + t.hours   + '<div class="mobile_headers">hours</div></td>' +
@@ -188,7 +193,6 @@
         }
 
         function toggleClock(evt){
-            console.log(evt.target);
             if(evt.target.classList[0] == "table_toggle"){
                 var target = evt.target, 
                     parent_table = target.parentNode.parentNode.parentNode.parentNode;
@@ -203,19 +207,19 @@
 
         function load(){
             var dates = [
-                {traveller: "Katie", location: "New York", month: 9, day: 28, year: 2016, hour: 19, minute: 30}, // Sept 28
-                {traveller: "Katie", location: "New York", month: 10, day: 29, year: 2016, hour: 11, minute: 0}, // Oct 29
-                {traveller: "Naimah", location: "London", month: 11, day: 18, year: 2016, hour: 8, minute: 0}, // Nov 18
-                {traveller: "Katie", location: "New York", month: 11, day: 23, year: 2016, hour: 20, minute: 0}, // Nov 23
-                {traveller: "Katie", location: "New York", month: 12, day: 23, year: 2016, hour: 20, minute: 0}, // Dec 23
+                {traveller: "Katie", location: "New York",  month: 9,   day: 28, year: 2016, hour: 19,  minute: 30, tripDuration: 5}, // Sept 28
+                {traveller: "Katie", location: "New York",  month: 10,  day: 29, year: 2016, hour: 11,  minute: 0,  tripDuration: 8}, // Oct 29
+                {traveller: "Naimah",location: "London",    month: 11,  day: 18, year: 2016, hour: 8,   minute: 0,  tripDuration: 3}, // Nov 18
+                {traveller: "Katie", location: "New York",  month: 11,  day: 23, year: 2016, hour: 20,  minute: 0,  tripDuration: 4}, // Nov 23
+                {traveller: "Katie", location: "New York",  month: 12,  day: 23, year: 2016, hour: 20,  minute: 0,  tripDuration: 10} // Dec 23
             ];
             var page = document.getElementById("page");
             var image = "/images/nk"+ Math.round(Math.random() * (19 - 1) + 1) +".jpg";
-            page.setAttribute("style", "background-image: url('" + image +"'); background-repeat: no-repeat; background-attachment: fixed; background-position: center; background-size: cover;");
+            page.setAttribute("style", "background-image: url('" + image +"');");
             setInterval(function(){
                 image = "/images/nk"+ Math.round(Math.random() * (19 - 1) + 1) +".jpg";
-                page.setAttribute("style", "background-image: url('" + image +"'); background-repeat: no-repeat; background-attachment: fixed; background-position: center; background-size: cover;");}
-            , 5000);
+                page.setAttribute("style", "background-image: url('" + image +"');");
+            }, 5000);
             printDates(dates);
             var page_wrapper = document.getElementById("page_wrapper");
             page_wrapper.onclick = toggleClock;
