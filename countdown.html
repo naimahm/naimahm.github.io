@@ -18,6 +18,10 @@
         margin: 0;
         font-family: 'Open Sans', sans-serif;
     }
+    body{
+        height: 100%;
+        overflow: hidden
+    }
 
     p{font-size: 16px;}
     h1, .nearest th { font-size: 3em;}
@@ -211,13 +215,14 @@
                 {traveller: "Katie", location: "New York",  month: 10,  day: 28, year: 2016, hour: 23,  minute: 10,  tripDuration: 9}, // Oct 29
                 {traveller: "Naimah",location: "London",    month: 11,  day: 18, year: 2016, hour: 2,   minute: 50,  tripDuration: 3}, // Nov 18
                 {traveller: "Katie", location: "New York",  month: 11,  day: 23, year: 2016, hour: 23,  minute: 15,  tripDuration: 4}, // Nov 23
-                {traveller: "Naimah", location: "London",  month: 12,  day: 25, year: 2016, hour: 4,  minute: 15,  tripDuration: 10} // Dec 23
+                {traveller: "Naimah", location: "London",  month: 12,  day: 25, year: 2016, hour: 4,  minute: 15,  tripDuration: 10}, // Dec 25
+                {traveller: "Katie", location: "New York",  month: 1,  day: 25, year: 2016, hour: 11,  minute: 30,  tripDuration: 5} // Jan 25
             ];
             var page = document.getElementById("page");
-            var image = "/images/nk"+ Math.round(Math.random() * (30 - 1) + 1) +".jpg";
+            var image = "/images/nk"+ Math.round(Math.random() * (36 - 1) + 1) +".jpg";
             page.setAttribute("style", "background-image: url('" + image +"');");
             setInterval(function(){
-                var randNum = Math.round(Math.random() * (30 - 1) + 1);
+                var randNum = Math.round(Math.random() * (36 - 1) + 1);
                 var fileName = randNum == 20 ? "nk" + randNum + ".gif" : "nk" + randNum + ".jpg";
                 image = "/images/" + fileName;
                 page.setAttribute("style", "background-image: url('" + image +"');");
