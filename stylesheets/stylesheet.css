@@ -27,3 +27,21 @@ a {color: #266782;}
 .numberResult{width: 200px; font-size: 2em; text-align: center; border: 1px dashed; margin-top: .75em;}
 .numberResult:hover{cursor: pointer; border-color: black; color: white; background-color: #aaa;}
 .numberResult:before{ content: attr(number); display: block; font-size: 3em; color: white;}
+
+
+/* NET EFFECTIVE RENT */
+.jumbotron .input-group-btn>.btn {
+	padding: 6px 12px;
+	font-size: 14px;
+}
+
+.input-group{
+	margin-bottom: 5px;
+}
+
+.net-effective-rent #output{
+	height: auto;
+
+	font-size: 36px;
+	text-align: center;
+}
