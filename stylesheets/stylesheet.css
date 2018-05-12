@@ -41,7 +41,33 @@ a {color: #266782;}
 
 .net-effective-rent #output{
 	height: auto;
-
 	font-size: 36px;
 	text-align: center;
+}
+
+@media screen and (max-width: 640px){
+	.net-effective-rent #output{
+		max-width: 480px;
+	}
+}
+
+@media screen and (max-width: 480px){
+	.net-effective-rent #output{
+		max-width: 400px;
+	}
+	.jumbotron .btn{
+		max-width: 100%;
+		font-size: 17px;
+	}
+}
+
+@media screen and (max-width: 320px){
+	.net-effective-rent #output{
+		max-width: 280px;
+	}
+
+	.jumbotron .btn{
+		max-width: 280px;
+		font-size: 13px;
+	}
 }

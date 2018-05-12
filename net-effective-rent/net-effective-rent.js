@@ -6,15 +6,16 @@ $(document).ready(function(){
     $("#submit").click(function(evt){
       evt.preventDefault();
       var $out = $("#output");
-      var rent = $("#rent").val(), rentType = $('input[name="rent"]:checked').attr('id'), concessionLength = $("#concessionLength").val(), leaseLength = $("#leaseLength").val();
-      if(rentType && rent.length && concessionLength.length && leaseLength.length){
+      var rent = $("#rent").val(), rentType = $('input[name="rent"]:checked').attr('id'),
+          concessionLength = $("#concessionLength").val(), leaseLength = $("#leaseLength").val();
+      if(rentType && !!rent.length && !!concessionLength.length && !!leaseLength.length){
         if($out.is(':hidden')){ $out.show(); }
         $('input').removeClass('has-error');
         var getRent = rentType === "net" ? getGrossRent : getNetEffectiveRent;
-        $out.val(
+        $("#output").text(
           'Your '
             + (rentType === "net" ? "actual monthly rent" : "net effective rent")
-            + ' will be $' +getRent(rent, concessionLength, leaseLength)+ '.');
+            + ' will be $' +getRent(rent, concessionLength, leaseLength).toFixed(2));
         if($('#submit').hasClass('btn-success')){
           $('#submit').removeClass('btn-success')
               .addClass('btn-warning')
