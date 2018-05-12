@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+section {
+  margin: 25px auto;
+}
+section.rows{
+  border: 2px dashed;
+}
+label input, label select {
+  display: block;
+  margin: auto;
+  padding: 15px;
+  font-size: 1.25em;
+}
+
+label.whodunit {
+  display:  inline-block;
+  width: 75px;
+  height: 75px;
+  border: 1px solid;
+  margin: 3px;
+  padding: 3px;
+}
+
+.whodunit input {
+  display: none;
+  /* margin: 20px auto; */
+}
+
+.whodunit.selected{
+  color: white;
+  background: #1d8230;
+}
+
+label select {
+  padding: 15px;
+  font-size: 1.25em;
+}
+
+button{
+  padding: 10px;
+  margin: 5px;
+  background: #1d8230;
+  border: 2px solid;
+  color: white;
+  font-size: 1.25em;  
+}
+button:disabled{
+  background: rgba(29, 130, 48, 0.35);
+}
+
+table {
+  width: 100%;
+}
+
+a{
+  display: inline-block; 
+  padding: 5px;
+}
+
+li{
+  list-style: none;
+}
